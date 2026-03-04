@@ -12,6 +12,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	// DefaultOutputDir is set at build time via -ldflags
+	DefaultOutputDir = "."
+)
+
 func main() {
 	// Load .env file
 	if err := godotenv.Load(); err != nil {
@@ -40,7 +45,7 @@ func main() {
 
 			outputDir := os.Getenv("ZIGZAG_OUTPUT_DIR")
 			if outputDir == "" {
-				outputDir = "." // Fallback to current directory
+				outputDir = DefaultOutputDir
 			}
 
 			ext := ".apk"
