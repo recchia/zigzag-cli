@@ -40,3 +40,13 @@ func AskFileName(defaultName string) (string, error) {
 	err := survey.AskOne(prompt, &name)
 	return name, err
 }
+
+func AskOutputDir() (string, error) {
+	var dir string
+	prompt := &survey.Input{
+		Message: "Enter the base output directory:",
+		Default: ".",
+	}
+	err := survey.AskOne(prompt, &dir)
+	return dir, err
+}

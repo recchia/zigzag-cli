@@ -5,23 +5,13 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/recchia/zigzag-cli/internal/downloader"
 	"github.com/recchia/zigzag-cli/internal/eas"
 	"github.com/recchia/zigzag-cli/internal/ui"
 	"github.com/spf13/cobra"
 )
 
-var (
-	// DefaultOutputDir is set at build time via -ldflags
-	DefaultOutputDir = "."
-)
-
 func main() {
-	// Load .env file
-	if err := godotenv.Load(); err != nil {
-		// We don't want to fail if .env is missing, as the variable might be set in the environment
-	}
 
 	var rootCmd = &cobra.Command{
 		Use:   "zigzag",
@@ -43,9 +33,9 @@ func main() {
 				log.Fatal("Selected build has no artifact URL")
 			}
 
-			outputDir := os.Getenv("ZIGZAG_OUTPUT_DIR")
-			if outputDir == "" {
-				outputDir = DefaultOutputDir
+			outputDir, err := ui.AskOutputDir()
+			if err != nil {
+				log.Fatalf("Error getting output directory: %v", err)
 			}
 
 			ext := ".apk"
