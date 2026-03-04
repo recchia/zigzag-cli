@@ -1,4 +1,5 @@
 BINARY_NAME=zigzag
+BUILD_DIR=build
 MAIN_FILE=cmd/zigzag/main.go
 
 .PHONY: all build test clean
@@ -9,7 +10,8 @@ test:
 	go test ./...
 
 build:
-	go build -o $(BINARY_NAME) $(MAIN_FILE)
+	mkdir -p $(BUILD_DIR)
+	go build -o $(BUILD_DIR)/$(BINARY_NAME) $(MAIN_FILE)
 
 clean:
-	rm -f $(BINARY_NAME)
+	rm -rf $(BUILD_DIR)
